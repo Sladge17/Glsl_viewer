@@ -1,0 +1,7 @@
+#!/usr/bin/bash
+
+WINDOW_WIDTH="800" \
+WINDOW_HEIGHT="800" \
+GLSL_LIBRARY="GLSL_LibraryFrag" \
+GLSL_SHADER="shader_example.frag" \
+python3 main.py
