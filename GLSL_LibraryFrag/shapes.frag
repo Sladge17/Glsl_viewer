@@ -39,6 +39,17 @@ float shapeCross(vec2 uv, float size)
 }
 
 
+float shapePolygon(vec2 uv, float size, int sides)
+{
+    float angle = atan(uv.y, uv.x);
+    float slice = DOUBLE_PI / float(sides);
+    return step(
+        cos(floor(0.5 + angle / slice) * slice - angle) * length(uv),
+        0.001 * size
+    );
+}
+
+
 float shapeFunction(float function, float direction)
 {
     return step(function, direction);

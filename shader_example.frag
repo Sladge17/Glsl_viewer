@@ -37,7 +37,7 @@ void main()
     // vec3 color = vec3(uv.x);
 
     // vec3 color = vec3(step(min(uv.x, uv.y), 0.0) - step(max(uv.x, uv.y), 0.0));
-    vec3 color = vec3((shapeChecker(uv)));
-
+    // vec3 color = vec3((shapeChecker(uv - 0.5)));
+    vec3 color = vec3(shapePolygon(uv, 100.0, 6));
     gl_FragColor = vec4(color, 1.0);
 }

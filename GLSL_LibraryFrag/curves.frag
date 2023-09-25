@@ -24,13 +24,19 @@ float curveCircle(vec2 uv, float size, float width)
 
 float curveSquare(vec2 uv, float size, float width)
 {
-    return step(abs(max(abs(uv.x), abs(uv.y)) - 0.001 * size), 0.001 * width);
+    return step(
+        abs(max(abs(uv.x), abs(uv.y)) - 0.001 * size),
+        0.001 * width
+    );
 }
 
 
 float curveCross(vec2 uv, float size, float width)
 {
-    return step(abs(min(abs(uv.x), abs(uv.y)) - 0.001 * size), 0.001 * width);
+    return step(
+        abs(min(abs(uv.x), abs(uv.y)) - 0.001 * size),
+        0.001 * width
+    );
 }
 
 
@@ -39,6 +45,7 @@ float curveFunction(float function, float direction, float border, float width)
     float border_down = function - border / 2.0;
     float border_up = function + border / 2.0;
     return step(
-        abs(smoothstep(border_down, border_up, direction) - 0.5), 0.001 * width
+        abs(smoothstep(border_down, border_up, direction) - 0.5),
+        0.001 * width
     );
 }
