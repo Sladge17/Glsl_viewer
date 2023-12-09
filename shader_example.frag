@@ -6,10 +6,29 @@ uniform vec2 u_resolution;
 uniform float u_time;
 
 
+void setAspectRatio(inout vec2 uv)
+{
+    if (u_resolution.x == u_resolution.y)
+        return;
+    
+    if (u_resolution.x > u_resolution.y)
+    {
+        uv.x *= u_resolution.x / u_resolution.y;
+        return;
+    }
+    uv.y *= u_resolution.y / u_resolution.x;
+}
+
+
+vec2 normFragCoord()
+{
+    return gl_FragCoord.xy / u_resolution;
+}
+
 void main()
 {
-    vec2 uv = gl_FragCoord.xy / u_resolution - 0.5;
-    // uv.x *= 10.0;
+    vec2 uv = normFragCoord() - 0.5;
+    setAspectRatio(uv);
 
 
     // uv.y *= 4.0;
@@ -38,6 +57,11 @@ void main()
 
     // vec3 color = vec3(step(min(uv.x, uv.y), 0.0) - step(max(uv.x, uv.y), 0.0));
     // vec3 color = vec3((shapeChecker(uv - 0.5)));
-    vec3 color = vec3(shapePolygon(uv, 100.0, 6));
+    // vec3 color = vec3(shapePolygon(uv, 100.0, 6));
+
+    // vec3 color = vec3((sin(atan(uv.y, uv.x) * 5.0)));
+    vec3 color = vec3(shapePolar(uv, 3));
+
+
     gl_FragColor = vec4(color, 1.0);
 }

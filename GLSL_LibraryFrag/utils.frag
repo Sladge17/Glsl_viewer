@@ -4,6 +4,12 @@ float grad2rad(float angle_grad)
 }
 
 
+vec2 dec2pol(vec2 uv)
+{
+    return vec2(length(uv), atan(uv.y, uv.x));
+}
+
+
 float invert(float value)
 {
     return step(value, 0.0);

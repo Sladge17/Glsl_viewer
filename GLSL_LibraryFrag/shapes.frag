@@ -50,6 +50,12 @@ float shapePolygon(vec2 uv, float size, int sides)
 }
 
 
+float shapePolar(vec2 uv, int sides)
+{
+    return step(0.0, sin((atan(uv.y, uv.x) * float(sides))));
+}
+
+
 float shapeFunction(float function, float direction)
 {
     return step(function, direction);
