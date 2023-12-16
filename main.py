@@ -2,6 +2,7 @@ import pygame as pg
 import moderngl as mgl
 import numpy as np
 # import time
+from math import sin
 import os
 
 
@@ -83,9 +84,13 @@ def main(resolution, glsl_library, glsl_shader):
             )
         except:
             continue
-                
+                   
         try:
             shader_program['u_resolution'] = resolution
+        except KeyError:
+            pass
+        
+        try:
             shader_program['u_time'] = u_time
             u_time += 1e-2
         except KeyError:

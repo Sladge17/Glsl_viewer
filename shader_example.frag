@@ -56,8 +56,9 @@ void main()
     // vec2 uv = normFragCoord() - 0.5;
     // setAspectRatio(uv, u_resolution);
 
-    vec2 uv = normFragCoord();
-    vec3 color = vec3(noizeUniform(uv, 10.0));
+    // vec2 uv = normFragCoord();
+    vec3 color = vec3(noize1d(u_time));
+    // vec3 color = vec3(0.5 + u_time);
 
     // vec3 color = vec3(lightCircle(uv, 0.05, 0.0));
 
