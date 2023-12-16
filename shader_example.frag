@@ -6,29 +6,78 @@ uniform vec2 u_resolution;
 uniform float u_time;
 
 
-void setAspectRatio(inout vec2 uv)
-{
-    if (u_resolution.x == u_resolution.y)
-        return;
-    
-    if (u_resolution.x > u_resolution.y)
-    {
-        uv.x *= u_resolution.x / u_resolution.y;
-        return;
-    }
-    uv.y *= u_resolution.y / u_resolution.x;
-}
-
-
 vec2 normFragCoord()
 {
     return gl_FragCoord.xy / u_resolution;
 }
 
+
+float scaningLine(float direction, float scale, float speed)
+{
+    return cos(floor(float(direction * scale)) - speed);
+}
+
+
+// void main()
+// {
+//     // float factor = 10.0;
+//     // vec2 uv = normFragCoord() * factor;
+//     // // vec3 color = sin(floor(vec3(1.0 - uv.x)) + u_time / 10.0);
+//     // vec3 color_x = sin(floor(vec3(uv.x)) - u_time / 20.0);
+//     // vec3 color_y = sin(floor(vec3(uv.y)) - u_time / 20.0);
+//     // vec3 color = color_x + color_y;
+//     // gl_FragColor = vec4(color, 1.0);
+
+//     vec2 uv = normFragCoord();
+//     float mask = scaningLine(uv.x, 5.0, u_time / 20.0);
+//     vec3 color = vec3(1.0, 0.0, 0.0);
+//     gl_FragColor = vec4(color * mask, 1.0);
+// }
+
+
+
+float arrayRadial(float figure, vec2 pivot, int quantity)
+{
+    float shift_angle = float(360 / quantity);
+    float array = figure;
+    int n = 0;
+
+    while(n < quantity)
+    {
+        array += dot(rotation(pivot, grad2rad(float(n) * shift_angle)), vec2(figure));
+        n += 1;
+    }
+    return array;
+}
+
+
 void main()
 {
-    vec2 uv = normFragCoord() - 0.5;
-    setAspectRatio(uv);
+    // vec2 uv = normFragCoord() - 0.5;
+    // setAspectRatio(uv, u_resolution);
+
+    vec2 uv = normFragCoord();
+    vec3 color = vec3(noizeUniform(uv, 10.0));
+
+    // vec3 color = vec3(lightCircle(uv, 0.05, 0.0));
+
+    // float mask = lightCircle(uv, 0.01, 0.0);
+    // float mask = arrayRadial(lightCircle(moving(uv, vec2(0.2, 0.0)), 0.01, 0.0), vec2(0.0), 5);
+
+    
+    // int quantity = 5;
+    // float angle = float(360 / quantity);
+    
+    // int n = 0;
+    // float mask = 0.0;
+    // while (n < quantity)
+    // {
+    //     mask += lightCircle(moving(rotation(uv, grad2rad(float(n) * angle)), vec2(0.0, 0.2)), 0.01, 0.0);
+    //     n += 1;
+    // }
+
+    // vec3 color = vec3(mask);
+
 
 
     // uv.y *= 4.0;
@@ -60,7 +109,7 @@ void main()
     // vec3 color = vec3(shapePolygon(uv, 100.0, 6));
 
     // vec3 color = vec3((sin(atan(uv.y, uv.x) * 5.0)));
-    vec3 color = vec3(shapePolar(uv, 3));
+    // vec3 color = vec3(shapePolar(uv, 3));
 
 
     gl_FragColor = vec4(color, 1.0);
