@@ -68,6 +68,14 @@ def main(resolution, glsl_library, glsl_shader):
     vbo, vertex_shader = init_vbo(ctx)
 
     glsl_library = get_glsl_library(glsl_library)
+    
+    # need wrap to function!!!!!!!!!
+    texture = pg.image.load("Tim_Braid.png").convert()
+    texture = ctx.texture(
+        size=texture.get_size(),
+        components=3,
+        data=pg.image.tostring(texture, 'RGB'),
+    )
         
     u_time = 0
     while True:
@@ -93,6 +101,12 @@ def main(resolution, glsl_library, glsl_shader):
         try:
             shader_program['u_time'] = u_time
             u_time += 1e-2
+        except KeyError:
+            pass
+
+        try:
+            shader_program['u_texture_0'] = 0
+            texture.use()
         except KeyError:
             pass
 

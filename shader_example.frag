@@ -4,6 +4,7 @@ precision mediump float;
 
 uniform vec2 u_resolution;
 uniform float u_time;
+uniform sampler2D u_texture_0;
 
 
 vec2 normFragCoord()
@@ -16,24 +17,6 @@ float scaningLine(float direction, float scale, float speed)
 {
     return cos(floor(float(direction * scale)) - speed);
 }
-
-
-// void main()
-// {
-//     // float factor = 10.0;
-//     // vec2 uv = normFragCoord() * factor;
-//     // // vec3 color = sin(floor(vec3(1.0 - uv.x)) + u_time / 10.0);
-//     // vec3 color_x = sin(floor(vec3(uv.x)) - u_time / 20.0);
-//     // vec3 color_y = sin(floor(vec3(uv.y)) - u_time / 20.0);
-//     // vec3 color = color_x + color_y;
-//     // gl_FragColor = vec4(color, 1.0);
-
-//     vec2 uv = normFragCoord();
-//     float mask = scaningLine(uv.x, 5.0, u_time / 20.0);
-//     vec3 color = vec3(1.0, 0.0, 0.0);
-//     gl_FragColor = vec4(color * mask, 1.0);
-// }
-
 
 
 float arrayRadial(float figure, vec2 pivot, int quantity)
@@ -51,13 +34,34 @@ float arrayRadial(float figure, vec2 pivot, int quantity)
 }
 
 
+// void main()
+// {
+//     vec2 uv = normFragCoord();
+//     uv.y = 1.0 - uv.y;
+//     // gl_FragColor = texture2D(u_texture, uv);
+//     // vec3 color = texture2D(u_texture_0, uv).rgb;
+//     // gl_FragColor = vec4(color, 1.0);
+
+//     vec3 color_1 = texture2D(u_texture_0, uv).rgb;
+//     vec3 color_2 = vec3(1.0, 0.0, 0.0);
+//     float mask = uv.x;
+//     vec3 color = mix(color_1, color_2, mask);
+
+    
+//     gl_FragColor = vec4(color, 1.0);
+// }
+
+
+
 void main()
 {
-    // vec2 uv = normFragCoord() - 0.5;
+    vec2 uv = normFragCoord();
     // setAspectRatio(uv, u_resolution);
 
-    // vec2 uv = normFragCoord();
-    vec3 color = vec3(noize1d(u_time));
+    vec3 color = vec3(noize2d(sin(uv + u_time / 10000.0)));
+
+
+    // vec3 color = vec3(noize1d(u_time));
     // vec3 color = vec3(0.5 + u_time);
 
     // vec3 color = vec3(lightCircle(uv, 0.05, 0.0));
