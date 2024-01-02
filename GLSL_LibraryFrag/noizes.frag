@@ -24,18 +24,19 @@ float noize2dCells(vec2 uv)
 
 float noize2dValue(vec2 uv, bool smooth_noize)
 {
-    vec2 int_part = floor(uv);
-    vec2 fract_part = fract(uv);
-    
+    vec2 uv_cell = fract(uv);
     if (smooth_noize)
-        fract_part = smoothstep(0.0, 1.0, fract_part);
+        uv_cell = smoothstep(0.0, 1.0, uv_cell);
 
-    float corner_left_buttom = noize2d(int_part);
-    float corner_right_buttom = noize2d(int_part + vec2(1.0, 0.0));
-    float corner_left_top = noize2d(int_part + vec2(0.0, 1.0));
-    float corner_right_top = noize2d(int_part + vec2(1.0, 1.0));
-
-    float noize_bottom = mix(corner_left_buttom, corner_right_buttom, fract_part.x);
-    float noize_top = mix(corner_left_top, corner_right_top, fract_part.x);
-    return mix(noize_bottom, noize_top, fract_part.y);
+    float noize_bottom = mix(
+        noize2dCells(uv),
+        noize2dCells(uv + vec2(1.0, 0.0)),
+        uv_cell.x
+    );
+    float noize_top = mix(
+        noize2dCells(uv + vec2(0.0, 1.0)),
+        noize2dCells(uv + vec2(1.0, 1.0)),
+        uv_cell.x
+    );
+    return mix(noize_bottom, noize_top, uv_cell.y);
 }
