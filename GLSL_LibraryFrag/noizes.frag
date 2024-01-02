@@ -16,15 +16,9 @@ float noize2dCustom(vec2 uv, vec2 factor1, float factor2)
 }
 
 
-float noize2dCells(vec2 uv, vec2 multiplier)
+float noize2dCells(vec2 uv)
 {
-    return noize2d(floor(uv * multiplier));
-}
-
-
-float noize2dCellsUniform(vec2 uv, float multiplier)
-{
-    return noize2d(floor(uv * multiplier));
+    return noize2d(floor(uv));
 }
 
 
