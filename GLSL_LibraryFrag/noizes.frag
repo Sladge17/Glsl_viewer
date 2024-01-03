@@ -1,27 +1,27 @@
-float randomValue(float value)
+float noizeSimple(float value)
 {
     return cos(value + cos(value * 90.0) * 100.0) * 0.5 + 0.5;
 }
 
 
-float random1d(vec2 uv, vec2 factor1, float factor2)
+float noize1d(vec2 uv, vec2 factor1, float factor2)
 {
     return fract(sin(dot(uv, factor1)) * factor2);
 }
 
 
-vec2 random2d(vec2 uv)
+vec2 noize2d(vec2 uv)
 {
     return vec2(
-        random1d(uv, vec2(127.1, 311.7), 43758.5453123),
-        random1d(uv, vec2(269.5, 183.3), 43758.5453123)
+        noize1d(uv, vec2(127.1, 311.7), 43758.5453123),
+        noize1d(uv, vec2(269.5, 183.3), 43758.5453123)
     );
 }
 
 
 float noizeCells(vec2 uv)
 {
-    return random1d(floor(uv), vec2(12.9898, 78.233), 43758.5453123);
+    return noize1d(floor(uv), vec2(12.9898, 78.233), 43758.5453123);
 }
 
 
@@ -50,10 +50,10 @@ float noizePerlin(vec2 uv)
     vec2 cell_id = floor(uv);
     vec2 cell_uv = fract(uv);
 
-    vec2 a_vector = random2d(cell_id);
-    vec2 b_vector = random2d(cell_id + vec2(1.0, 0.0));
-    vec2 c_vector = random2d(cell_id + vec2(0.0, 1.0));
-    vec2 d_vector = random2d(cell_id + vec2(1.0, 1.0));
+    vec2 a_vector = noize2d(cell_id);
+    vec2 b_vector = noize2d(cell_id + vec2(1.0, 0.0));
+    vec2 c_vector = noize2d(cell_id + vec2(0.0, 1.0));
+    vec2 d_vector = noize2d(cell_id + vec2(1.0, 1.0));
 
     vec2 a_uv = cell_uv;
     vec2 b_uv = cell_uv - vec2(1.0, 0.0);
