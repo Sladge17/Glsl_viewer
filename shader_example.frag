@@ -55,10 +55,21 @@ float arrayRadial(float figure, vec2 pivot, int quantity)
 
 void main()
 {
-    vec2 uv = normFragCoord() * 5.0;
+    vec2 uv = normFragCoord();
     // setAspectRatio(uv, u_resolution);
 
-    vec3 color = vec3(noize2dValue(uv, false));
+    // vec3 color = vec3(noize2dValue(uv, false));
+    // vec3 color = vec3(shapeChecker(uv));
+
+    // vec2 uv_id = floor(uv);
+    // float mask = mod(uv_id.x + uv_id.y, 2.0);
+
+    // if (uv_id.x == 0.0) && (uv_id.y == 0.0)
+    //     mask = 1.0;
+    // else
+    //     mask = 0.0;
+
+    vec3 color = vec3(shapeChecker(uv));
 
     gl_FragColor = vec4(color, 1.0);
 }

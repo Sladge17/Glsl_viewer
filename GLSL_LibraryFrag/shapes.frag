@@ -18,7 +18,7 @@ float shapeDiagonalInvert(vec2 uv_equal)
 
 float shapeChecker(vec2 uv)
 {
-    return step(min(uv.x, uv.y), 0.0) - step(max(uv.x, uv.y), 0.0);
+    return mod(floor(uv.x) + floor(uv.y), 2.0);
 }
 
 float shapeCircle(vec2 uv, float size)
