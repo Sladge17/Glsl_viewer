@@ -66,3 +66,9 @@ float noizePerlin(vec2 uv)
         cell_uv.y
     );
 }
+
+
+float noizeBillow(vec2 uv)
+{
+    return abs(noizePerlin(uv));
+}
