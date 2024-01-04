@@ -50,19 +50,19 @@ float noizePerlin(vec2 uv)
     vec2 cell_id = floor(uv);
     vec2 cell_uv = fract(uv);
 
-    vec2 a_vector = noize2d(cell_id);
-    vec2 b_vector = noize2d(cell_id + vec2(1.0, 0.0));
-    vec2 c_vector = noize2d(cell_id + vec2(0.0, 1.0));
-    vec2 d_vector = noize2d(cell_id + vec2(1.0, 1.0));
+    vec2 lb_vector = noize2d(cell_id);
+    vec2 rb_vector = noize2d(cell_id + vec2(1.0, 0.0));
+    vec2 lt_vector = noize2d(cell_id + vec2(0.0, 1.0));
+    vec2 rt_vector = noize2d(cell_id + vec2(1.0, 1.0));
 
-    vec2 a_uv = cell_uv;
-    vec2 b_uv = cell_uv - vec2(1.0, 0.0);
-    vec2 c_uv = cell_uv - vec2(0.0, 1.0);
-    vec2 d_uv = cell_uv - vec2(1.0, 1.0);
+    vec2 lb_crd_px = cell_uv;
+    vec2 rb_crd_px = cell_uv - vec2(1.0, 0.0);
+    vec2 lt_crd_px = cell_uv - vec2(0.0, 1.0);
+    vec2 rt_crd_px = cell_uv - vec2(1.0, 1.0);
 
 	return mix(
-        mix(dot(a_vector, a_uv), dot(b_vector, b_uv), cell_uv.x),
-        mix(dot(c_vector, c_uv), dot(d_vector, d_uv), cell_uv.x),
+        mix(dot(lb_vector, lb_crd_px), dot(rb_vector, rb_crd_px), cell_uv.x),
+        mix(dot(lt_vector, lt_crd_px), dot(rt_vector, rt_crd_px), cell_uv.x),
         cell_uv.y
     );
 }
