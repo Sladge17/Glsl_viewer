@@ -72,3 +72,19 @@ float noizeBillow(vec2 uv)
 {
     return abs(noizePerlin(uv));
 }
+
+
+float noizeVoronoiCore2(vec2 uv, vec2 core1, vec2 core2)
+{
+    vec2 point[2];
+    point[0] = core1;
+    point[1] =  core2;
+
+    float m_dist = 1.0;
+    for (int i = 0; i < 2; i++)
+    {
+        float dist = distance(uv, point[i]);
+        m_dist = min(m_dist, dist);
+    }
+    return m_dist;
+}
