@@ -64,5 +64,6 @@ void main()
     vec3 color = vec3(noizeVoronoiCore2(uv, vec2(0.83, 0.75), vec2(0.31, 0.26)));
 
     // gl_FragColor = vec4(color, 1.0);
-    gl_FragColor = texture2D(u_texture_0, uv);
+    // gl_FragColor = texture2D(u_texture_0, uv);
+    gl_FragColor = textureSimple(u_texture_0, uv);
 }
