@@ -42,7 +42,17 @@ def get_glsl_library(path_glsl_library):
     for source in os.listdir(path_glsl_library):
         with open(os.path.join(path_glsl_library, source)) as file:
             glsl_library += file.read()
-    return glsl_library  
+    return glsl_library
+
+
+def get_image_texture(ctx, path_texture):
+    image_texture = pg.image.load(path_texture).convert()
+    image_texture = ctx.texture(
+        size=image_texture.get_size(),
+        components=3,
+        data=pg.image.tostring(image_texture, 'RGB'),
+    )
+    return image_texture
 
 
 def check_ivent():
@@ -59,7 +69,7 @@ def release_program(vbo, shader_program, vao):
     pg.quit()
 
 
-def main(resolution, glsl_library, glsl_shader):
+def main(resolution, glsl_library, glsl_shader, image_texture):
     pg.init()
     init_display(pg.display, resolution)
 
@@ -68,15 +78,8 @@ def main(resolution, glsl_library, glsl_shader):
     vbo, vertex_shader = init_vbo(ctx)
 
     glsl_library = get_glsl_library(glsl_library)
-    
-    # need wrap to function!!!!!!!!!
-    texture = pg.image.load("Tim_Braid.png").convert()
-    texture = ctx.texture(
-        size=texture.get_size(),
-        components=3,
-        data=pg.image.tostring(texture, 'RGB'),
-    )
-        
+    image_texture = get_image_texture(ctx, image_texture)
+            
     u_time = 0
     while True:
         if check_ivent():
@@ -106,7 +109,7 @@ def main(resolution, glsl_library, glsl_shader):
 
         try:
             shader_program['u_texture_0'] = 0
-            texture.use()
+            image_texture.use()
         except KeyError:
             pass
 
@@ -124,8 +127,11 @@ if __name__ == "__main__":
     window_height = int(os.environ['WINDOW_HEIGHT'])
     glsl_library = os.environ['GLSL_LIBRARY']
     glsl_shader = os.environ['GLSL_SHADER']
+    image_texture = os.environ['IMAGE_TEXTURE']
 
-    main((window_width, window_height), glsl_library, glsl_shader)
-
-    # while True:
-    #     print((time.time() - int(time.time())) * 100)
+    main(
+        (window_width, window_height),
+        glsl_library,
+        glsl_shader,
+        image_texture,
+    )

@@ -56,11 +56,13 @@ float arrayRadial(float figure, vec2 pivot, int quantity)
 void main()
 {
     vec2 uv = normFragCoord() * 1.0;
+    uv.y = 1.0 - uv.y;
     // setAspectRatio(uv, u_resolution);
 
     // vec3 color = vec3(1.0 - noizePerlin(uv));
     // vec3 color = vec3(1.0 - noizeBillow(uv));
     vec3 color = vec3(noizeVoronoiCore2(uv, vec2(0.83, 0.75), vec2(0.31, 0.26)));
 
-    gl_FragColor = vec4(color, 1.0);
+    // gl_FragColor = vec4(color, 1.0);
+    gl_FragColor = texture2D(u_texture_0, uv);
 }

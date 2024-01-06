@@ -4,4 +4,5 @@ WINDOW_WIDTH="800" \
 WINDOW_HEIGHT="800" \
 GLSL_LIBRARY="GLSL_LibraryFrag" \
 GLSL_SHADER="shader_example.frag" \
+IMAGE_TEXTURE="Tim_Braid.png" \
 python3 main.py
